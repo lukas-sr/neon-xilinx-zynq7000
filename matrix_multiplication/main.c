@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <arm_neon.h>
+#include "neoh.h"
 #include "platform.h"
 #include "xil_printf.h"
 #include "xtime_l.h"
@@ -9,15 +9,6 @@
 #define DIM_MATRIX 4
 
 int32_t sum_ni(int16_t *array);
-
-int16_t sum_c(int16_t *array) {
-    int16_t summ = 0;
-    for (int i = 0; i < DIM_MATRIX; i++) {
-        summ += (int16_t)array[i];
-    }
-
-    return summ;
-}
 
 void mat_product_c(float **mat_A, float **mat_B, float **mat_C) {
     for (int i = 0; i < DIM_MATRIX; i++) {
@@ -60,7 +51,7 @@ int main()
     // printf("sum: %d \n", sum);
 
     XTime_GetTime(&tStartNi);
-    // int16_t sum_16x8 = sum_ni(arr);
+    // mat_product_c(A, B, C);
     XTime_GetTime(&tEndNi);
 
     // XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ = 650000000
