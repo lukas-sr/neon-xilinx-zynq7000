@@ -8,8 +8,6 @@
 
 #define DIM_MATRIX 4
 
-int32_t sum_ni(int16_t *array);
-
 void mat_product_c(float **mat_A, float **mat_B, float **mat_C) {
     for (int i = 0; i < DIM_MATRIX; i++) {
         for (int j = 0; j < DIM_MATRIX; j++) {
@@ -31,33 +29,31 @@ int main()
     float B[DIM_MATRIX][DIM_MATRIX];
     float C[DIM_MATRIX][DIM_MATRIX];
 
-    XTime tStart, tEnd, tStartNi, tEndNi;
+    XTime tStartC, tEndC, tStartNi, tEndNi;
 
     for (int i = 0; i < DIM_MATRIX; i++){
         for (int j = 0; j < DIM_MATRIX ; j++){
-            A[i][j] = 2;
-            B[i][j] = 3;
+            A[i][j] = 1;
+            B[i][j] = 2;
         }
     }
 
-    
-    XTime_GetTime(&tStart);
+    XTime_GetTime(&tStartC);
     mat_product_c(A, B, C);
-    XTime_GetTime(&tEnd);
+    XTime_GetTime(&tEndC);
     
     // XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ = 650000000
-    double timeElapsed = (double) (tEnd - tStart) / (double) XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ;
-    printf("time elapsed: %f \n", timeElapsed);
-    // printf("sum: %d \n", sum);
-
+    double timeElapsedC = (double) (tEndC - tStartC) / (double) XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ;
+    printf("time elapsed: %f \n", timeElapsedC);
+    
     XTime_GetTime(&tStartNi);
-    // mat_product_c(A, B, C);
+    mat_product_ni(A, B, C);
     XTime_GetTime(&tEndNi);
 
     // XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ = 650000000
-    double timeElapsed2 = (double) (tEndNi - tStartNi) / (double) XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ;
+    double timeElapsedNi = (double) (tEndNi - tStartNi) / (double) XPAR_PS7_CORTEXA9_0_CPU_CLK_FREQ_HZ;
 
-    printf("time elapsed: %f \n", timeElapsed2);
+    printf("time elapsed: %f \n", timeElapsedNi);
     // printf("sum: %d \n", sum_16x8);
 
     cleanup_platform();
